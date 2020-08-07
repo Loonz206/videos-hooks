@@ -37,7 +37,7 @@ class App extends Component {
     const { videos } = this.state;
     return (
       <div className="ui container">
-        <SearchBar onSubmit={this.onTermSubmit}/>
+        <SearchBar onFormSubmit={this.onTermSubmit}/>
         <div className="ui grid">
           <div className="ui row">
             <div className="eleven wide column">
