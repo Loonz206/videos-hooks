@@ -6,7 +6,8 @@
     "axios": "^0.18.1",
     "react": "^16.10.1",
     "react-dom": "^16.10.1",
-    "react-scripts": "3.1.2"
+    "react-scripts": "3.1.2",
+    "store": "^2.0.12"
   },
   "scripts": {
     "start": "react-scripts start",

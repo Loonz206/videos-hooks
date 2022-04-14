@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 const SearchBar = ({ onFormSubmit }) => {
   const [term, setTerm] = useState("");
@@ -23,6 +24,10 @@ const SearchBar = ({ onFormSubmit }) => {
       </form>
     </div>
   );
+};
+
+SearchBar.propTypes = {
+  onFormSubmit: PropTypes.func,
 };
 
 export default SearchBar;

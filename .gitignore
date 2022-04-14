@@ -13,6 +13,7 @@
 
 # misc
 .DS_Store
+.dccache
 .env
 .env.local
 .env.development.local

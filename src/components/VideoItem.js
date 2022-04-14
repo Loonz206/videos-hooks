@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./VideoItem.css";
 
 const VideoItem = ({ video, onVideoSelect }) => {
@@ -15,6 +16,11 @@ const VideoItem = ({ video, onVideoSelect }) => {
       </div>
     </div>
   );
+};
+
+VideoItem.propTypes = {
+  video: PropTypes.shape(),
+  onVideoSelect: PropTypes.func,
 };
 
 export default VideoItem;

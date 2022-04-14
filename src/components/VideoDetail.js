@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
+import { SearchContext } from "./App";
 
 const VideoDetail = ({ video }) => {
+  // literally testing grabbing context that was at the App level
+  const value = useContext(SearchContext);
+  console.log("VALUE", value);
   if (!video) {
     return <div>Loading....</div>;
   }
@@ -16,6 +21,10 @@ const VideoDetail = ({ video }) => {
       </div>
     </div>
   );
+};
+
+VideoDetail.propTypes = {
+  video: PropTypes.shape(),
 };
 
 export default VideoDetail;
