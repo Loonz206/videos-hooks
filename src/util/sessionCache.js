@@ -41,6 +41,7 @@ const setDataToCache = (id, value) => {
   try {
     store.set(SESSION_CACHE, JSON.stringify(sessionCache));
   } catch (e) {
+    console.error("Failed to set session cache:", e);
     cleanUpStorage(data);
   }
 };
@@ -80,4 +81,4 @@ const cleanUpStorage = (data) => {
   );
 };
 
-export { setDataToCache, getSessionCache };
+export { setDataToCache, getSessionCache, cleanUpStorage };

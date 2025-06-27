@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types";
-import { SearchContext } from "./App";
+import { SearchContext } from "../App";
 
 const VideoDetail = ({ video }) => {
   // literally testing grabbing context that was at the App level
