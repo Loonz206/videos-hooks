@@ -14,8 +14,11 @@ const App = () => {
 
   useEffect(() => {
     setSelectedVideo(videos[0]);
+  }, [videos]);
+
+  useEffect(() => {
     setDataToCache(selectedVideo);
-  }, [videos, selectedVideo]);
+  }, [selectedVideo]);
 
   return (
     <SearchContext.Provider value={selectedVideo}>

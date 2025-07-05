@@ -1,11 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { SearchContext } from "../App";
 
 const VideoDetail = ({ video }) => {
   // literally testing grabbing context that was at the App level
-  const value = useContext(SearchContext);
-  console.log("VALUE", value);
   if (!video) {
     return <div>Loading....</div>;
   }
