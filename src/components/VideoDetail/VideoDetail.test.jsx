@@ -1,7 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import VideoDetail from "./VideoDetail.tsx";
-import { SearchContext } from "../App.tsx";
+import VideoDetail from "./VideoDetail.jsx";
 
 describe("VideoDetail", () => {
   test("renders loading if no video", () => {
@@ -18,18 +17,5 @@ describe("VideoDetail", () => {
     expect(screen.getByText("Test Title")).toBeInTheDocument();
     expect(screen.getByText("Test Desc")).toBeInTheDocument();
     expect(screen.getByTitle("video player")).toBeInTheDocument();
-  });
-
-  test("uses context value", () => {
-    const video = {
-      id: { videoId: "abc123" },
-      snippet: { title: "Test Title", description: "Test Desc" },
-    };
-    render(
-      <SearchContext.Provider value={{ foo: "bar" }}>
-        <VideoDetail video={video} />
-      </SearchContext.Provider>,
-    );
-    expect(screen.getByText("Test Title")).toBeInTheDocument();
   });
 });

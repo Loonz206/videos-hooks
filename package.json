@@ -19,10 +19,17 @@
     "preview": "vite preview",
     "lint": "standard --fix && npm run format",
     "format": "prettier --write .",
-    "test": "jest --watchAll --env=jsdom --coverage"
+    "test": "jest --env=jsdom --coverage"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
     "@vitejs/plugin-react": "^4.6.0",
+    "babel-jest": "^30.0.4",
+    "jest": "^30.0.4",
+    "jest-environment-jsdom": "^30.0.4",
     "prettier": "^3.6.2",
     "prop-types": "^15.8.1",
     "standard": "^17.1.2",

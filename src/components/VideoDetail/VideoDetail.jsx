@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const VideoDetail = ({ video }) => {
-  // literally testing grabbing context that was at the App level
   if (!video) {
     return <div>Loading....</div>;
   }
@@ -21,7 +20,15 @@ const VideoDetail = ({ video }) => {
 };
 
 VideoDetail.propTypes = {
-  video: PropTypes.shape(),
+  video: PropTypes.shape({
+    id: PropTypes.shape({
+      videoId: PropTypes.string.isRequired,
+    }).isRequired,
+    snippet: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
 };
 
 export default VideoDetail;

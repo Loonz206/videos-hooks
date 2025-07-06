@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import SearchBar from "./SearchBar/SearchBar";
-import VideoDetail from "./VideoDetail/VideoDetail";
-import VideoList from "./VideoList/VideoList";
-import useVideos from "../hooks/useVideos";
+import SearchBar from "./SearchBar/SearchBar.jsx";
+import VideoDetail from "./VideoDetail/VideoDetail.jsx";
+import VideoList from "./VideoList/VideoList.jsx";
+import useVideos from "../hooks/useVideos.js";
 import { setDataToCache } from "../util/sessionCache";
 
 export const SearchContext = React.createContext("");
