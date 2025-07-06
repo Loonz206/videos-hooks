@@ -9,7 +9,7 @@ const useFetch = (url) => {
 
   useEffect(() => {
     if (!url) {
-      setError(`Error occurred: missing url`);
+      setError("Error occurred: missing url");
       return;
     }
     const fetchData = async () => {
@@ -23,7 +23,7 @@ const useFetch = (url) => {
         try {
           const response = await fetch(url);
           if (response.status > 200) {
-            setError(`Error occurred:`, response.status);
+            setError("Error occurred:", response.status);
           } else {
             const res = await response.json();
             cache.current[url] = res; // set response in cache;
@@ -32,7 +32,7 @@ const useFetch = (url) => {
             setStatus("fetched");
           }
         } catch (err) {
-          setError(`Error occurred:`, err);
+          setError("Error occurred:", err);
           setStatus("Errored");
         }
       }

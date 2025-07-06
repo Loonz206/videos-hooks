@@ -1,7 +1,4 @@
-const dotenv = require("dotenv");
-dotenv.config();
-
-module.exports = {
-  key: process.env.REACT_APP_YT_API_KEY,
-  baseUrl: process.env.REACT_APP_BASEURL,
+export default {
+  key: import.meta.env.VITE_YT_API_KEY,
+  baseUrl: import.meta.env.VITE_BASEURL,
 };

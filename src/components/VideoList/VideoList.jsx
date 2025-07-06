@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import VideoItem from "../VideoItem/VideoItem";
+import VideoItem from "../VideoItem/VideoItem.jsx";
 
 const VideoList = ({ videos, onVideoSelect }) => {
   const renderedList = videos.map((video) => {
@@ -29,7 +29,7 @@ VideoList.propTypes = {
           }).isRequired,
         }).isRequired,
       }).isRequired,
-    })
+    }),
   ).isRequired,
   onVideoSelect: PropTypes.func.isRequired,
 };

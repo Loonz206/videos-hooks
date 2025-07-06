@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import VideoDetail from "./VideoDetail";
-import { SearchContext } from "../App";
+import VideoDetail from "./VideoDetail.tsx";
+import { SearchContext } from "../App.tsx";
 
 describe("VideoDetail", () => {
   test("renders loading if no video", () => {
@@ -28,7 +28,7 @@ describe("VideoDetail", () => {
     render(
       <SearchContext.Provider value={{ foo: "bar" }}>
         <VideoDetail video={video} />
-      </SearchContext.Provider>
+      </SearchContext.Provider>,
     );
     expect(screen.getByText("Test Title")).toBeInTheDocument();
   });

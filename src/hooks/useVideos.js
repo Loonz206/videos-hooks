@@ -37,9 +37,9 @@ const useVideos = (defaultSearchTerm) => {
         setDataToCache(term, data.items);
       } else {
         console.error(
-          `An error has occurred:`,
+          "An error has occurred:",
           response.status,
-          window.location.href
+          window.location.href,
         );
       }
     } catch (error) {

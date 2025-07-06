@@ -12,7 +12,7 @@ const VideoItem = ({ video, onVideoSelect }) => {
         alt={video.snippet.description}
       />
       <div className="content">
-        <div className="header"></div>
+        <div className="header" />
         {video.snippet.title}
       </div>
     </div>

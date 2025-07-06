@@ -75,9 +75,9 @@ const cleanUpStorage = (data) => {
   store.set(
     SESSION_CACHE,
     JSON.stringify({
-      data: data,
+      data,
       nextCleanup: currentTime() + twoWeeks,
-    })
+    }),
   );
 };
 

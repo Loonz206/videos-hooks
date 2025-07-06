@@ -3,7 +3,7 @@ import useVideos from "./useVideos";
 
 jest.mock("../api/youtube", () => ({
   get: jest.fn(() =>
-    Promise.resolve({ status: 200, data: { items: [{ id: 1 }] } })
+    Promise.resolve({ status: 200, data: { items: [{ id: 1 }] } }),
   ),
 }));
 

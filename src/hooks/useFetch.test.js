@@ -19,7 +19,7 @@ describe("useFetch", () => {
       json: async () => [1, 2, 3],
     });
     const { result, waitForNextUpdate } = renderHook(() =>
-      useFetch("/test-url")
+      useFetch("/test-url"),
     );
     expect(result.current.status).toBe("fetching");
     await waitForNextUpdate();
@@ -30,7 +30,7 @@ describe("useFetch", () => {
   test("returns error on fetch failure", async () => {
     fetch.mockRejectedValueOnce(new Error("fail"));
     const { result, waitForNextUpdate } = renderHook(() =>
-      useFetch("/fail-url")
+      useFetch("/fail-url"),
     );
     await waitForNextUpdate();
     expect(result.current.error).toMatch(/error occurred/i);
@@ -40,7 +40,7 @@ describe("useFetch", () => {
   test("returns error on non-200 status", async () => {
     fetch.mockResolvedValueOnce({ status: 404 });
     const { result, waitForNextUpdate } = renderHook(() =>
-      useFetch("/bad-url")
+      useFetch("/bad-url"),
     );
     await waitForNextUpdate();
     expect(result.current.error).toMatch(/error occurred/i);

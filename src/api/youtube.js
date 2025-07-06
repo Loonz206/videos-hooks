@@ -1,12 +1,12 @@
 import axios from "axios";
-import { key, baseUrl } from "../config";
+import config from "../config";
 
 export default axios.create({
-  baseURL: baseUrl,
+  baseURL: config.baseUrl,
   params: {
     part: "snippet",
     type: "video",
     maxResults: 5,
-    key: key,
+    key: config.key,
   },
 });
