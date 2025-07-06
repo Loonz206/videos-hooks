@@ -17,7 +17,7 @@ A modern React course project that demonstrates advanced React concepts using cu
 
 ### Prerequisites
 
-- Node.js v16 (recommended for compatibility)
+- Node.js v22 (recommended for compatibility)
 - Yarn or npm
 
 ### Installation
@@ -47,6 +47,8 @@ This project uses the YouTube Data API v3. You must provide your own API key:
    ```env
    REACT_APP_YT_API_KEY=your_youtube_api_key_here
    REACT_APP_BASEURL=https://www.googleapis.com/youtube/v3
+   VITE_YT_API_KEY=your_youtube_api_key_here
+   VITE_BASEURL=https://www.googleapis.com/youtube/v3
    ```
 
 ### Running the App Locally
