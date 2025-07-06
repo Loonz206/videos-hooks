@@ -8,7 +8,7 @@ const useVideos = (defaultSearchTerm) => {
   useEffect(() => {
     // Check cache before making a network call
     const cache = getSessionCache();
-    const cachedItem = cache.data && cache.data[defaultSearchTerm];
+    const cachedItem = cache?.data && cache?.data[defaultSearchTerm];
     if (
       cachedItem &&
       Array.isArray(cachedItem.value) &&
@@ -37,9 +37,9 @@ const useVideos = (defaultSearchTerm) => {
         setDataToCache(term, data.items);
       } else {
         console.error(
-          `An error has occurred:`,
+          "An error has occurred:",
           response.status,
-          window.location.href
+          window.location.href,
         );
       }
     } catch (error) {

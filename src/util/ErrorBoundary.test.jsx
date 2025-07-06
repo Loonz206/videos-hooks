@@ -1,13 +1,13 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundary from "./ErrorBoundary.jsx";
 
 describe("ErrorBoundary", () => {
   it("renders children when no error", () => {
     const { getByText } = render(
       <ErrorBoundary fallback={<div>Fallback</div>}>
         <div>Child</div>
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
     expect(getByText("Child")).toBeInTheDocument();
   });
@@ -20,7 +20,7 @@ describe("ErrorBoundary", () => {
     const { getByText } = render(
       <ErrorBoundary fallback={<div>Fallback</div>}>
         <Problem />
-      </ErrorBoundary>
+      </ErrorBoundary>,
     );
     expect(getByText("Fallback")).toBeInTheDocument();
     console.error.mockRestore();

@@ -1,9 +1,9 @@
-import { renderHook, act } from "@testing-library/react-hooks";
+import { renderHook, waitFor, act } from "@testing-library/react";
 import useVideos from "./useVideos";
 
 jest.mock("../api/youtube", () => ({
   get: jest.fn(() =>
-    Promise.resolve({ status: 200, data: { items: [{ id: 1 }] } })
+    Promise.resolve({ status: 200, data: { items: [{ id: 1 }] } }),
   ),
 }));
 
@@ -33,22 +33,20 @@ describe("useVideos", () => {
   });
 
   test("returns videos and search function", async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useVideos("test"));
-    await waitForNextUpdate();
+    const { result } = renderHook(() => useVideos("test"));
     expect(Array.isArray(result.current[0])).toBe(true);
     expect(typeof result.current[1]).toBe("function");
   });
 
   test("handles empty results", async () => {
     youtube.get.mockResolvedValueOnce({ status: 200, data: { items: [] } });
-    const { result, waitForNextUpdate } = renderHook(() => useVideos("empty"));
-    await waitForNextUpdate();
+    const { result } = renderHook(() => useVideos("empty"));
     expect(result.current[0]).toEqual([]);
   });
 
   test("handles error response", async () => {
     youtube.get.mockRejectedValueOnce(new Error("fail"));
-    const { result, waitFor } = renderHook(() => useVideos("fail"));
+    const { result } = renderHook(() => useVideos("fail"));
     await waitFor(() => Array.isArray(result.current[0]));
     expect(Array.isArray(result.current[0])).toBe(true);
   });
@@ -62,8 +60,7 @@ describe("useVideos", () => {
   });
 
   test("search function updates videos", async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useVideos("init"));
-    await waitForNextUpdate();
+    const { result } = renderHook(() => useVideos("init"));
     youtube.get.mockResolvedValueOnce({
       status: 200,
       data: { items: [{ id: 2 }] },

@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import VideoItem from "./VideoItem";
+import VideoItem from "./VideoItem.jsx";
 
 describe("VideoItem", () => {
   const video = {
@@ -27,7 +27,7 @@ describe("VideoItem", () => {
 
   test("renders nothing if no video", () => {
     const { container } = render(
-      <VideoItem video={null} onVideoSelect={jest.fn()} />
+      <VideoItem video={null} onVideoSelect={jest.fn()} />,
     );
     expect(container).toBeEmptyDOMElement();
   });
