@@ -8,6 +8,7 @@ module.exports = {
     "plugin:react/recommended",
     "standard",
     "plugin:prettier/recommended",
+    "@tanstack/eslint-plugin-query/react",
   ],
   parserOptions: {
     ecmaFeatures: {
