@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tanstack/react-query": "^5.81.5",
     "axios": "^1.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
+    "@tanstack/eslint-plugin-query": "^5.81.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@vitejs/plugin-react": "^4.6.0",
