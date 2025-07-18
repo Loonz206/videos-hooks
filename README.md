@@ -15,7 +15,7 @@ A modern React course project that demonstrates advanced React concepts using cu
 - View video details and descriptions
 - Custom React hooks for data fetching and caching
 - Error boundaries and robust error handling
-- Modern React patterns (hooks, context, prop-types)
+- Modern React patterns (hooks, context, types)
 - 80%+ test coverage with React Testing Library
 
 ## Getting Started
