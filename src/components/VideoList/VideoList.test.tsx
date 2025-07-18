@@ -1,6 +1,5 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import VideoList from "./VideoList.jsx";
+import VideoList from "./VideoList.tsx";
 
 describe("VideoList", () => {
   test("renders no videos if empty", () => {

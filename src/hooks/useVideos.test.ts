@@ -8,16 +8,16 @@ jest.mock("../api/youtube", () => ({
 }));
 
 jest.mock("../util/sessionCache", () => {
-  let cache = {};
+  let cache: { [key: string]: any } = {};
   return {
     getSessionCache: jest.fn(() => ({ data: cache })),
     setDataToCache: jest.fn((key, value) => {
       cache[key] = { value };
     }),
-    __setCache: (newCache) => {
+    __setCache: (newCache: { [key: string]: { value: any } }) => {
       cache = newCache;
     },
-    __clearCache: () => {
+    __clearCache: (): void => {
       cache = {};
     },
   };
@@ -66,7 +66,10 @@ describe("useVideos", () => {
       data: { items: [{ id: 2 }] },
     });
     await act(async () => {
-      await result.current[1]("new search");
+      const searchFunction = result.current[1] as (
+        term: string,
+      ) => Promise<void>;
+      await searchFunction("new search");
     });
     expect(result.current[0]).toEqual([{ id: 2 }]);
   });

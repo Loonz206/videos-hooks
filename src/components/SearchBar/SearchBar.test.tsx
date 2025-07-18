@@ -1,6 +1,5 @@
-import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
-import SearchBar from "./SearchBar.jsx";
+import SearchBar from "./SearchBar.tsx";
 
 describe("SearchBar", () => {
   test("renders input and label", () => {

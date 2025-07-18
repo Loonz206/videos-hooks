@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
-import SearchBar from "./SearchBar/SearchBar.jsx";
-import VideoDetail from "./VideoDetail/VideoDetail.jsx";
-import VideoList from "./VideoList/VideoList.jsx";
-import useVideos from "../hooks/useVideos.js";
-import { setDataToCache } from "../util/sessionCache";
+import SearchBar from "./SearchBar/SearchBar.tsx";
+import VideoDetail from "./VideoDetail/VideoDetail.tsx";
+import VideoList from "./VideoList/VideoList.tsx";
+import useVideos from "../hooks/useVideos.ts";
+import { setDataToCache } from "../util/sessionCache.ts";
 
 export const SearchContext = React.createContext("");
 
 const App = () => {
   // Always call hooks at the top level
-  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState("");
   const [videos, search] = useVideos("bacon cheeseburgers");
 
   useEffect(() => {
-    setSelectedVideo(videos[0]);
+    if (videos.length > 0) {
+      setSelectedVideo(videos[0]);
+    }
   }, [videos]);
 
   useEffect(() => {
-    setDataToCache(selectedVideo);
+    setDataToCache(selectedVideo, "selectedVideo");
   }, [selectedVideo]);
 
   return (
