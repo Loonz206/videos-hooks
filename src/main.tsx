@@ -1,7 +1,7 @@
-import React, { lazy, Suspense, StrictMode } from "react";
+import { lazy, Suspense, StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import ErrorBoundary from "./util/ErrorBoundary.jsx";
-const App = lazy(() => import("./components/App.jsx"));
+import ErrorBoundary from "./util/ErrorBoundary.tsx";
+const App = lazy(() => import("./components/App.tsx"));
 const root = createRoot(document.querySelector("#root"));
 
 root.render(

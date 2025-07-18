@@ -1,6 +1,5 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import VideoItem from "./VideoItem.jsx";
+import VideoItem from "./VideoItem.tsx";
 
 describe("VideoItem", () => {
   const video = {

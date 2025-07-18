@@ -16,25 +16,36 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "standard --fix && npm run format",
     "format": "prettier --write .",
+    "tsc": "tsc --noEmit --watch",
     "test": "jest --env=jsdom --coverage"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.0",
     "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
     "@tanstack/eslint-plugin-query": "^5.81.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
-    "@vitejs/plugin-react": "^4.6.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
+    "@vitejs/plugin-react-swc": "^3.10.2",
     "babel-jest": "^30.0.4",
     "jest": "^30.0.4",
     "jest-environment-jsdom": "^30.0.4",
     "prettier": "^3.6.2",
     "prop-types": "^15.8.1",
+    "source-map-loader": "^5.0.0",
     "standard": "^17.1.2",
+    "ts-loader": "^9.5.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
     "vite": "^7.0.2"
   }
 }

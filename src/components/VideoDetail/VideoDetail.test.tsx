@@ -1,6 +1,5 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
-import VideoDetail from "./VideoDetail.jsx";
+import VideoDetail from "./VideoDetail.tsx";
 
 describe("VideoDetail", () => {
   test("renders loading if no video", () => {
