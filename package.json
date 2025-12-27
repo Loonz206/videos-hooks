@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tanstack/react-query": "^5.81.5",
+    "@tanstack/react-query-devtools": "^5.83.0",
     "axios": "^1.10.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -20,7 +21,7 @@
     "preview": "vite preview",
     "lint": "standard --fix && npm run format",
     "format": "prettier --write .",
-    "tsc": "tsc --noEmit --watch",
+    "tsc": "tsc --noEmit",
     "test": "jest --env=jsdom --coverage"
   },
   "devDependencies": {

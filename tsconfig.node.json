@@ -9,7 +9,8 @@
     "allowSyntheticDefaultImports": true,
 
     /* Bundler mode */
-    "noEmit": true,
+    "noEmit": false,
+    "emitDeclarationOnly": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
