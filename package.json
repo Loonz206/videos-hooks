@@ -21,7 +21,7 @@
     "preview": "vite preview",
     "lint": "standard --fix && npm run format",
     "format": "prettier --write .",
-    "tsc": "tsc --noEmit --watch",
+    "tsc": "tsc --noEmit",
     "test": "jest --env=jsdom --coverage"
   },
   "devDependencies": {
