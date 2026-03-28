@@ -4,6 +4,7 @@
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Github Actions Status](https://github.com/Loonz206/videos-hooks/actions/workflows/ci.yml/badge.svg)](https://github.com/Loonz206/videos-hooks/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/Loonz206/videos-hooks/graph/badge.svg)](https://codecov.io/gh/Loonz206/videos-hooks)
 
 A modern React course project that demonstrates advanced React concepts using custom hooks, context, and functional components. This app allows users to search for YouTube videos and view details, leveraging the YouTube Data API v3.
 
