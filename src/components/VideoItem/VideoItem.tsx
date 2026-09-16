@@ -14,7 +14,11 @@ const VideoItem = ({
   };
 
   return (
-    <button type="button" className="item video-item" onClick={handleSelect}>
+    <button
+      type="button"
+      className="item video-item-card"
+      onClick={handleSelect}
+    >
       <img
         className="ui image"
         src={video.snippet.thumbnails.medium.url}

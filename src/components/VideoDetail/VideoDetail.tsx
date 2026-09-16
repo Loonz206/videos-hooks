@@ -1,3 +1,5 @@
+import './VideoDetail.css';
+
 interface Video {
   id: {
     videoId: string;

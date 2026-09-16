@@ -1,0 +1,16 @@
+:root {
+  --video-detail-background: #000;
+}
+
+.video-detail__embed {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--video-detail-background);
+}
+
+.video-detail__embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
