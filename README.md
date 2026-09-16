@@ -1,8 +1,7 @@
 # Videos-Hooks
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![code style: biome](https://img.shields.io/badge/code_style-biome-60a5fa.svg?style=flat-square)](https://biomejs.dev/)
 [![Github Actions Status](https://github.com/Loonz206/videos-hooks/actions/workflows/ci.yml/badge.svg)](https://github.com/Loonz206/videos-hooks/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/Loonz206/videos-hooks/graph/badge.svg)](https://codecov.io/gh/Loonz206/videos-hooks)
 
