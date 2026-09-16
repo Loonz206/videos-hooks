@@ -1,3 +1,7 @@
+:root {
+  --video-detail-background: #000;
+}
+
 .app-container.ui.container {
   padding: 1rem 0 2rem;
 }
@@ -26,7 +30,7 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: #000;
+  background: var(--video-detail-background);
 }
 
 .video-detail__embed iframe {
