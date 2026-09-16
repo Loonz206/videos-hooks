@@ -23,7 +23,7 @@ A modern React course project that demonstrates advanced React concepts using cu
 ### Prerequisites
 
 - Node.js v22 (recommended for compatibility)
-- Yarn or npm
+- pnpm 10.17.1 (recommended via Corepack)
 
 ### Installation
 
@@ -37,9 +37,8 @@ A modern React course project that demonstrates advanced React concepts using cu
 2. **Install dependencies:**
 
    ```sh
-   yarn install
-   # or
-   npm install
+   corepack enable
+   pnpm install
    ```
 
 ### Setup API Keys
@@ -60,19 +59,15 @@ This project uses the YouTube Data API v3. You must provide your own API key:
 
 ```sh
 # Start the development server
-yarn start
-# or
-npm start
+pnpm dev
 ```
 
-The app will be available at [http://localhost:3000](http://localhost:3000).
+The app will be available at [http://localhost:5173](http://localhost:5173).
 
 ### Running Tests
 
 ```sh
-yarn test --coverage
-# or
-npm test -- --coverage
+pnpm test
 ```
 
 ## License
