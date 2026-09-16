@@ -18,12 +18,7 @@ const VideoDetail = ({ video }: { video: Video | null }) => {
   return (
     <div>
       <div className="video-detail__embed">
-        <iframe
-          title="video player"
-          src={videoSrc}
-          loading="lazy"
-          style={{ border: 0 }}
-        />
+        <iframe title="video player" src={videoSrc} style={{ border: 0 }} />
       </div>
       <div className="ui segment">
         <h4>{video.snippet.title}</h4>
