@@ -1,10 +1,10 @@
-import { lazy, Suspense, StrictMode } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { createRoot } from "react-dom/client";
-import ErrorBoundary from "./util/ErrorBoundary.tsx";
-const App = lazy(() => import("./components/App.tsx"));
-const root = createRoot(document.querySelector("#root")!);
+import { lazy, Suspense, StrictMode } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { createRoot } from 'react-dom/client';
+import ErrorBoundary from './util/ErrorBoundary.tsx';
+const App = lazy(() => import('./components/App.tsx'));
+const root = createRoot(document.querySelector('#root')!);
 
 const queryClient = new QueryClient({
   defaultOptions: {

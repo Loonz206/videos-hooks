@@ -6,13 +6,8 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "preset": "recommended",
-      "a11y": {
-        "noStaticElementInteractions": "off",
-        "useKeyWithClickEvents": "off"
-      },
+      "recommended": true,
       "complexity": {
-        "noImportantStyles": "off",
         "useDateNow": "off"
       },
       "suspicious": {
@@ -21,6 +16,6 @@
       }
     }
   },
-  "javascript": { "formatter": { "quoteStyle": "double" } },
+  "javascript": { "formatter": { "quoteStyle": "single" } },
   "assist": { "enabled": false }
 }
