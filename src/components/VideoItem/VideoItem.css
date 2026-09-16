@@ -1,9 +1,32 @@
-.video-item {
-  display: flex !important;
-  align-items: center !important;
+button.video-item.item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
   cursor: pointer;
+  text-align: left;
 }
 
-.video-item.item img {
+button.video-item.item img {
+  width: min(180px, 40vw);
   max-width: 180px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+button.video-item.item .content {
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  button.video-item.item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  button.video-item.item img {
+    width: 100%;
+    max-width: none;
+  }
 }
