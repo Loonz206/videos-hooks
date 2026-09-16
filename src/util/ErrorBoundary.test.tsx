@@ -1,12 +1,12 @@
-import { render } from "@testing-library/react";
-import ErrorBoundary from "./ErrorBoundary";
+import { render } from '@testing-library/react';
+import ErrorBoundary from './ErrorBoundary';
 
-describe("ErrorBoundary", () => {
+describe('ErrorBoundary', () => {
   let consoleSpy: jest.SpyInstance;
 
   beforeEach(() => {
     // Setup console.error spy before each test
-    consoleSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   afterEach(() => {
@@ -14,18 +14,18 @@ describe("ErrorBoundary", () => {
     consoleSpy.mockRestore();
   });
 
-  it("renders children when no error", () => {
+  it('renders children when no error', () => {
     const { getByText } = render(
       <ErrorBoundary fallback={<div>Fallback</div>}>
         <div>Child</div>
       </ErrorBoundary>,
     );
-    expect(getByText("Child")).toBeInTheDocument();
+    expect(getByText('Child')).toBeInTheDocument();
   });
 
-  it("renders fallback when error occurs", () => {
+  it('renders fallback when error occurs', () => {
     const Problem = () => {
-      throw new Error("fail");
+      throw new Error('fail');
     };
 
     const { getByText } = render(
@@ -33,21 +33,21 @@ describe("ErrorBoundary", () => {
         <Problem />
       </ErrorBoundary>,
     );
-    expect(getByText("Fallback")).toBeInTheDocument();
+    expect(getByText('Fallback')).toBeInTheDocument();
   });
 
-  it("renders null when no children and no fallback provided", () => {
+  it('renders null when no children and no fallback provided', () => {
     const { container } = render(<ErrorBoundary />);
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("logs warning when fallback is not provided", () => {
+  it('logs warning when fallback is not provided', () => {
     const consoleWarnSpy = jest
-      .spyOn(console, "warn")
+      .spyOn(console, 'warn')
       .mockImplementation(() => {});
     render(<ErrorBoundary />);
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "ErrorBoundary fallback not set!",
+      'ErrorBoundary fallback not set!',
     );
     consoleWarnSpy.mockRestore();
   });

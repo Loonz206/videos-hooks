@@ -1,9 +1,9 @@
-import { renderHook, waitFor } from "@testing-library/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import useVideos from "./useVideos";
+import { renderHook, waitFor } from '@testing-library/react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import useVideos from './useVideos';
 
 // Mock the entire @tanstack/react-query module
-jest.mock("@tanstack/react-query", () => ({
+jest.mock('@tanstack/react-query', () => ({
   useQuery: jest.fn(),
   useQueryClient: jest.fn(() => ({
     invalidateQueries: jest.fn(),
@@ -12,21 +12,21 @@ jest.mock("@tanstack/react-query", () => ({
 }));
 
 // Mock youtube API
-jest.mock("../api/youtube", () => ({
+jest.mock('../api/youtube', () => ({
   get: jest.fn(() =>
     Promise.resolve({
       status: 200,
       data: {
         items: [
           {
-            id: { kind: "youtube#video", videoId: "1" },
+            id: { kind: 'youtube#video', videoId: '1' },
             snippet: {
-              title: "Test Video",
-              description: "Test Description",
+              title: 'Test Video',
+              description: 'Test Description',
               thumbnails: {
-                default: { url: "test.jpg", width: 120, height: 90 },
-                medium: { url: "test.jpg", width: 320, height: 180 },
-                high: { url: "test.jpg", width: 480, height: 360 },
+                default: { url: 'test.jpg', width: 120, height: 90 },
+                medium: { url: 'test.jpg', width: 320, height: 180 },
+                high: { url: 'test.jpg', width: 480, height: 360 },
               },
             },
           },
@@ -37,7 +37,7 @@ jest.mock("../api/youtube", () => ({
 }));
 
 // Mock session cache
-jest.mock("../util/sessionCache", () => {
+jest.mock('../util/sessionCache', () => {
   let cache: { [key: string]: any } = {};
   return {
     getSessionCache: jest.fn(() => ({ data: cache })),
@@ -50,12 +50,12 @@ jest.mock("../util/sessionCache", () => {
   };
 });
 
-const sessionCache = require("../util/sessionCache");
-const youtube = require("../api/youtube");
+const sessionCache = require('../util/sessionCache');
+const youtube = require('../api/youtube');
 const mockedUseQuery = useQuery as jest.Mock;
 const mockedUseQueryClient = useQueryClient as jest.Mock;
 
-describe("useVideos", () => {
+describe('useVideos', () => {
   beforeEach(() => {
     sessionCache.__clearCache();
     jest.clearAllMocks();
@@ -69,25 +69,25 @@ describe("useVideos", () => {
     }));
   });
 
-  it("should return videos and search function", () => {
-    const { result } = renderHook(() => useVideos("test"));
+  it('should return videos and search function', () => {
+    const { result } = renderHook(() => useVideos('test'));
 
     expect(Array.isArray(result.current[0])).toBe(true);
-    expect(typeof result.current[1]).toBe("function");
+    expect(typeof result.current[1]).toBe('function');
   });
 
-  it("should handle search function call", async () => {
+  it('should handle search function call', async () => {
     // Setup mock data and functions
     const mockVideos = [
       {
-        id: { kind: "youtube#video", videoId: "new" },
+        id: { kind: 'youtube#video', videoId: 'new' },
         snippet: {
-          title: "New Video",
-          description: "Test Description",
+          title: 'New Video',
+          description: 'Test Description',
           thumbnails: {
-            default: { url: "test.jpg", width: 120, height: 90 },
-            medium: { url: "test.jpg", width: 320, height: 180 },
-            high: { url: "test.jpg", width: 480, height: 360 },
+            default: { url: 'test.jpg', width: 120, height: 90 },
+            medium: { url: 'test.jpg', width: 320, height: 180 },
+            high: { url: 'test.jpg', width: 480, height: 360 },
           },
         },
       },
@@ -110,18 +110,18 @@ describe("useVideos", () => {
       prefetchQuery: mockPrefetchQuery,
     }));
 
-    const { result } = renderHook(() => useVideos("initial"));
+    const { result } = renderHook(() => useVideos('initial'));
 
     // Call search function
-    await result.current[1]("new search");
+    await result.current[1]('new search');
 
     // Verify correct sequence of calls
     expect(mockInvalidateQueries).toHaveBeenCalledWith({
-      queryKey: ["videos"],
+      queryKey: ['videos'],
     });
 
     expect(mockPrefetchQuery).toHaveBeenCalledWith({
-      queryKey: ["videos", "new search"],
+      queryKey: ['videos', 'new search'],
       queryFn: expect.any(Function),
     });
 
@@ -137,17 +137,17 @@ describe("useVideos", () => {
     );
   });
 
-  it("should return cached data if available", () => {
+  it('should return cached data if available', () => {
     const cachedVideos = [
       {
-        id: { kind: "youtube#video", videoId: "cached" },
+        id: { kind: 'youtube#video', videoId: 'cached' },
         snippet: {
-          title: "Cached Video",
-          description: "Cached Description",
+          title: 'Cached Video',
+          description: 'Cached Description',
           thumbnails: {
-            default: { url: "cached.jpg", width: 120, height: 90 },
-            medium: { url: "cached.jpg", width: 320, height: 180 },
-            high: { url: "cached.jpg", width: 480, height: 360 },
+            default: { url: 'cached.jpg', width: 120, height: 90 },
+            medium: { url: 'cached.jpg', width: 320, height: 180 },
+            high: { url: 'cached.jpg', width: 480, height: 360 },
           },
         },
       },
@@ -160,31 +160,31 @@ describe("useVideos", () => {
       refetch: jest.fn(),
     }));
 
-    const { result } = renderHook(() => useVideos("cached"));
+    const { result } = renderHook(() => useVideos('cached'));
 
     expect(result.current[0]).toEqual(cachedVideos);
   });
 
-  it("should handle error states", () => {
+  it('should handle error states', () => {
     mockedUseQuery.mockImplementation(() => ({
       data: [],
       isLoading: false,
-      error: new Error("API Error"),
+      error: new Error('API Error'),
       refetch: jest.fn(),
     }));
 
-    const { result } = renderHook(() => useVideos("error"));
+    const { result } = renderHook(() => useVideos('error'));
 
     expect(result.current[0]).toEqual([]);
   });
 
-  it("should throw error when fetchVideos is called with empty term", async () => {
+  it('should throw error when fetchVideos is called with empty term', async () => {
     const mockRefetch = jest.fn().mockImplementation(async () => {
       try {
-        await youtube.get("/search", { params: { q: "" } });
+        await youtube.get('/search', { params: { q: '' } });
       } catch (err) {
         console.log(err);
-        throw new Error("No search term provided");
+        throw new Error('No search term provided');
       }
     });
 
@@ -214,14 +214,14 @@ describe("useVideos", () => {
       prefetchQuery: mockPrefetchQuery,
     }));
 
-    const { result } = renderHook(() => useVideos("initial"));
+    const { result } = renderHook(() => useVideos('initial'));
 
-    await expect(result.current[1]("")).rejects.toThrow(
-      "No search term provided",
+    await expect(result.current[1]('')).rejects.toThrow(
+      'No search term provided',
     );
   });
 
-  it("should call youtube API when data is not cached", async () => {
+  it('should call youtube API when data is not cached', async () => {
     youtube.get.mockClear();
 
     const mockRefetch = jest.fn().mockImplementation(async () => {
@@ -249,18 +249,18 @@ describe("useVideos", () => {
       prefetchQuery: mockPrefetchQuery,
     }));
 
-    const { result } = renderHook(() => useVideos("initial"));
+    const { result } = renderHook(() => useVideos('initial'));
 
-    await result.current[1]("new term");
+    await result.current[1]('new term');
 
     await waitFor(() => {
-      expect(youtube.get).toHaveBeenCalledWith("/search", {
-        params: { q: "new term" },
+      expect(youtube.get).toHaveBeenCalledWith('/search', {
+        params: { q: 'new term' },
       });
     });
   });
 
-  it("should cache data after API call", async () => {
+  it('should cache data after API call', async () => {
     const mockSetDataToCache = sessionCache.setDataToCache;
 
     const mockRefetch = jest.fn().mockImplementation(async () => {
@@ -288,16 +288,16 @@ describe("useVideos", () => {
       prefetchQuery: mockPrefetchQuery,
     }));
 
-    const { result } = renderHook(() => useVideos("initial"));
+    const { result } = renderHook(() => useVideos('initial'));
 
-    await result.current[1]("cache test");
+    await result.current[1]('cache test');
 
     await waitFor(() => {
       expect(mockSetDataToCache).toHaveBeenCalled();
     });
   });
 
-  it("should handle API error response with non-200 status", async () => {
+  it('should handle API error response with non-200 status', async () => {
     youtube.get.mockResolvedValueOnce({
       status: 500,
       data: { items: [] },
@@ -333,29 +333,29 @@ describe("useVideos", () => {
       prefetchQuery: mockPrefetchQuery,
     }));
 
-    const { result } = renderHook(() => useVideos("error test"));
+    const { result } = renderHook(() => useVideos('error test'));
 
-    await expect(result.current[1]("error test")).rejects.toThrow(
-      "API Error: 500",
+    await expect(result.current[1]('error test')).rejects.toThrow(
+      'API Error: 500',
     );
   });
 
-  it("should handle cache with non-array value", async () => {
-    sessionCache.setDataToCache("invalid", { value: "not an array" });
+  it('should handle cache with non-array value', async () => {
+    sessionCache.setDataToCache('invalid', { value: 'not an array' });
 
     youtube.get.mockResolvedValueOnce({
       status: 200,
       data: {
         items: [
           {
-            id: { kind: "youtube#video", videoId: "fallback" },
+            id: { kind: 'youtube#video', videoId: 'fallback' },
             snippet: {
-              title: "Fallback Video",
-              description: "Fallback Description",
+              title: 'Fallback Video',
+              description: 'Fallback Description',
               thumbnails: {
-                default: { url: "fallback.jpg", width: 120, height: 90 },
-                medium: { url: "fallback.jpg", width: 320, height: 180 },
-                high: { url: "fallback.jpg", width: 480, height: 360 },
+                default: { url: 'fallback.jpg', width: 120, height: 90 },
+                medium: { url: 'fallback.jpg', width: 320, height: 180 },
+                high: { url: 'fallback.jpg', width: 480, height: 360 },
               },
             },
           },
@@ -388,18 +388,18 @@ describe("useVideos", () => {
       prefetchQuery: mockPrefetchQuery,
     }));
 
-    const { result } = renderHook(() => useVideos("invalid"));
+    const { result } = renderHook(() => useVideos('invalid'));
 
-    await result.current[1]("invalid");
+    await result.current[1]('invalid');
 
     await waitFor(() => {
-      expect(youtube.get).toHaveBeenCalledWith("/search", {
-        params: { q: "invalid" },
+      expect(youtube.get).toHaveBeenCalledWith('/search', {
+        params: { q: 'invalid' },
       });
     });
   });
 
-  it("should use default data as empty array when useQuery returns undefined", () => {
+  it('should use default data as empty array when useQuery returns undefined', () => {
     mockedUseQuery.mockImplementation(() => ({
       data: undefined,
       isLoading: false,
@@ -407,12 +407,12 @@ describe("useVideos", () => {
       refetch: jest.fn(),
     }));
 
-    const { result } = renderHook(() => useVideos("test"));
+    const { result } = renderHook(() => useVideos('test'));
 
     expect(result.current[0]).toEqual([]);
   });
 
-  it("should pass correct query configuration to useQuery", () => {
+  it('should pass correct query configuration to useQuery', () => {
     mockedUseQuery.mockImplementation(() => ({
       data: [],
       isLoading: false,
@@ -420,17 +420,17 @@ describe("useVideos", () => {
       refetch: jest.fn(),
     }));
 
-    renderHook(() => useVideos("config test"));
+    renderHook(() => useVideos('config test'));
 
     expect(mockedUseQuery).toHaveBeenCalledWith({
-      queryKey: ["videos", "config test"],
+      queryKey: ['videos', 'config test'],
       queryFn: expect.any(Function),
       staleTime: 1000 * 60 * 5,
       retry: 1,
     });
   });
 
-  it("should handle empty cache data object", async () => {
+  it('should handle empty cache data object', async () => {
     sessionCache.getSessionCache.mockReturnValueOnce({ data: {} });
 
     youtube.get.mockResolvedValueOnce({
@@ -438,14 +438,14 @@ describe("useVideos", () => {
       data: {
         items: [
           {
-            id: { kind: "youtube#video", videoId: "new" },
+            id: { kind: 'youtube#video', videoId: 'new' },
             snippet: {
-              title: "New Video",
-              description: "Test Description",
+              title: 'New Video',
+              description: 'Test Description',
               thumbnails: {
-                default: { url: "test.jpg", width: 120, height: 90 },
-                medium: { url: "test.jpg", width: 320, height: 180 },
-                high: { url: "test.jpg", width: 480, height: 360 },
+                default: { url: 'test.jpg', width: 120, height: 90 },
+                medium: { url: 'test.jpg', width: 320, height: 180 },
+                high: { url: 'test.jpg', width: 480, height: 360 },
               },
             },
           },
@@ -478,16 +478,16 @@ describe("useVideos", () => {
       prefetchQuery: mockPrefetchQuery,
     }));
 
-    const { result } = renderHook(() => useVideos("empty cache"));
+    const { result } = renderHook(() => useVideos('empty cache'));
 
-    await result.current[1]("empty cache");
+    await result.current[1]('empty cache');
 
     await waitFor(() => {
       expect(youtube.get).toHaveBeenCalled();
     });
   });
 
-  it("should handle null cache", async () => {
+  it('should handle null cache', async () => {
     sessionCache.getSessionCache.mockReturnValueOnce(null);
 
     youtube.get.mockResolvedValueOnce({
@@ -495,14 +495,14 @@ describe("useVideos", () => {
       data: {
         items: [
           {
-            id: { kind: "youtube#video", videoId: "null cache" },
+            id: { kind: 'youtube#video', videoId: 'null cache' },
             snippet: {
-              title: "Null Cache Video",
-              description: "Test Description",
+              title: 'Null Cache Video',
+              description: 'Test Description',
               thumbnails: {
-                default: { url: "test.jpg", width: 120, height: 90 },
-                medium: { url: "test.jpg", width: 320, height: 180 },
-                high: { url: "test.jpg", width: 480, height: 360 },
+                default: { url: 'test.jpg', width: 120, height: 90 },
+                medium: { url: 'test.jpg', width: 320, height: 180 },
+                high: { url: 'test.jpg', width: 480, height: 360 },
               },
             },
           },
@@ -535,9 +535,9 @@ describe("useVideos", () => {
       prefetchQuery: mockPrefetchQuery,
     }));
 
-    const { result } = renderHook(() => useVideos("null test"));
+    const { result } = renderHook(() => useVideos('null test'));
 
-    await result.current[1]("null test");
+    await result.current[1]('null test');
 
     await waitFor(() => {
       expect(youtube.get).toHaveBeenCalled();

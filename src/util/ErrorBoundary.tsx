@@ -1,4 +1,4 @@
-import { Component, ReactNode } from "react";
+import { Component, ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
   fallback?: ReactNode;
@@ -16,7 +16,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
     const { fallback } = props;
 
     if (fallback === undefined) {
-      console.warn("ErrorBoundary fallback not set!");
+      console.warn('ErrorBoundary fallback not set!');
     }
   }
 
