@@ -70,6 +70,8 @@ The app will be available at [http://localhost:5173](http://localhost:5173).
 pnpm test
 ```
 
+Coverage is included by default in the `test` script.
+
 ## License
 
 MIT
