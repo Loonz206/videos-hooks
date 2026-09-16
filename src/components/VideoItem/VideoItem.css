@@ -9,7 +9,6 @@ button.video-item.item {
 
 button.video-item.item img {
   width: min(180px, 40vw);
-  max-width: 180px;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   flex-shrink: 0;
