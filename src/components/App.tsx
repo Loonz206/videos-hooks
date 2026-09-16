@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './App.css';
 import SearchBar from './SearchBar/SearchBar.tsx';
 import VideoDetail from './VideoDetail/VideoDetail.tsx';
 import VideoList from './VideoList/VideoList.tsx';
@@ -24,14 +25,14 @@ const App = () => {
 
   return (
     <SearchContext.Provider value={selectedVideo}>
-      <div className="ui container">
+      <div className="ui container app-container">
         <SearchBar onFormSubmit={search} />
-        <div className="ui grid">
+        <div className="ui stackable grid app-layout">
           <div className="ui row">
-            <div className="eleven wide column">
+            <div className="eleven wide column app-layout__primary">
               <VideoDetail video={selectedVideo} />
             </div>
-            <div className="five wide column">
+            <div className="five wide column app-layout__secondary">
               <VideoList onVideoSelect={setSelectedVideo} videos={videos} />
             </div>
           </div>
