@@ -28,6 +28,16 @@ describe('SearchBar', () => {
     expect(mockOnFormSubmit).toHaveBeenCalledTimes(1);
   });
 
+  test('calls onFormSubmit when the form is submitted directly', () => {
+    const mockOnFormSubmit = jest.fn();
+    render(<SearchBar onFormSubmit={mockOnFormSubmit} />);
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Hooks' } });
+    fireEvent.submit(input.closest('form'));
+    expect(mockOnFormSubmit).toHaveBeenCalledWith('Hooks');
+    expect(mockOnFormSubmit).toHaveBeenCalledTimes(1);
+  });
+
   test('calls onFormSubmit with empty string if input is empty', () => {
     const mockOnFormSubmit = jest.fn();
     render(<SearchBar onFormSubmit={mockOnFormSubmit} />);
