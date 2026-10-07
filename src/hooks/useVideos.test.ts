@@ -86,7 +86,19 @@ describe('useVideos', () => {
     });
 
     expect(mockedUseQuery).not.toHaveBeenCalledWith({
+      queryKey: ['videos', '   '],
+      queryFn: expect.any(Function),
+      staleTime: 1000 * 60 * 5,
+      retry: 1,
+    });
+    expect(mockedUseQuery).not.toHaveBeenCalledWith({
       queryKey: ['videos', ''],
+      queryFn: expect.any(Function),
+      staleTime: 1000 * 60 * 5,
+      retry: 1,
+    });
+    expect(mockedUseQuery).toHaveBeenLastCalledWith({
+      queryKey: ['videos', 'initial'],
       queryFn: expect.any(Function),
       staleTime: 1000 * 60 * 5,
       retry: 1,
