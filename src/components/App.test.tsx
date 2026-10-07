@@ -93,8 +93,10 @@ describe('App search flow', () => {
     await screen.findAllByText('Bacon Cheeseburgers Result');
 
     const input = screen.getByRole('textbox', { name: /video search/i });
+    const form = input.closest('form');
     fireEvent.change(input, { target: { value: 'mobile ui' } });
-    fireEvent.submit(input.closest('form'));
+    expect(form).not.toBeNull();
+    fireEvent.submit(form as HTMLFormElement);
 
     await waitFor(() => {
       expect(screen.getAllByText('Mobile UI Result').length).toBeGreaterThan(0);
