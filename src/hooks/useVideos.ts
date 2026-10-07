@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import youtube from '../api/youtube';
 import { getSessionCache, setDataToCache } from '../util/sessionCache';
@@ -15,13 +16,6 @@ interface Video {
       medium: { url: string; width: number; height: number };
       high: { url: string; width: number; height: number };
     };
-  };
-}
-
-interface CacheData {
-  [key: string]: {
-    value: Video[];
-    timestamp: number;
   };
 }
 
@@ -58,24 +52,28 @@ const fetchVideos = async (term: string): Promise<Video[]> => {
 
 const useVideos = (defaultSearchTerm: string): UseVideosReturn => {
   const queryClient = useQueryClient();
+  const [searchTerm, setSearchTerm] = useState(defaultSearchTerm);
 
-  const { data: videos = [], refetch } = useQuery({
-    queryKey: ['videos', defaultSearchTerm],
-    queryFn: () => fetchVideos(defaultSearchTerm),
+  const { data: videos = [] } = useQuery({
+    queryKey: ['videos', searchTerm],
+    queryFn: () => fetchVideos(searchTerm),
     staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
     retry: 1,
   });
 
   const search = async (term: string): Promise<void> => {
-    // Invalidate the current query and fetch with new term
-    await queryClient.invalidateQueries({ queryKey: ['videos'] });
-    // Prefetch the new term
+    const normalizedTerm = term.trim();
+
+    if (!normalizedTerm) {
+      throw new Error('No search term provided');
+    }
+
     await queryClient.prefetchQuery({
-      queryKey: ['videos', term],
-      queryFn: () => fetchVideos(term),
+      queryKey: ['videos', normalizedTerm],
+      queryFn: () => fetchVideos(normalizedTerm),
     });
-    // Trigger a refetch with the new term
-    await refetch();
+
+    setSearchTerm(normalizedTerm);
   };
 
   return [videos, search];

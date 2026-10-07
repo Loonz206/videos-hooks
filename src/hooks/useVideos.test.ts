@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import useVideos from './useVideos';
 
@@ -77,64 +77,27 @@ describe('useVideos', () => {
   });
 
   it('should handle search function call', async () => {
-    // Setup mock data and functions
-    const mockVideos = [
-      {
-        id: { kind: 'youtube#video', videoId: 'new' },
-        snippet: {
-          title: 'New Video',
-          description: 'Test Description',
-          thumbnails: {
-            default: { url: 'test.jpg', width: 120, height: 90 },
-            medium: { url: 'test.jpg', width: 320, height: 180 },
-            high: { url: 'test.jpg', width: 480, height: 360 },
-          },
-        },
-      },
-    ];
-
-    // Mock the query client methods
-    const mockRefetch = jest.fn().mockResolvedValue({ data: mockVideos });
-    const mockInvalidateQueries = jest.fn().mockResolvedValue(undefined);
     const mockPrefetchQuery = jest.fn().mockResolvedValue(undefined);
 
-    // Setup useQuery mock to return data and refetch function
     mockedUseQuery.mockImplementation(() => ({
       data: [],
-      refetch: mockRefetch,
     }));
 
-    // Setup useQueryClient mock
     mockedUseQueryClient.mockImplementation(() => ({
-      invalidateQueries: mockInvalidateQueries,
       prefetchQuery: mockPrefetchQuery,
     }));
 
     const { result } = renderHook(() => useVideos('initial'));
 
     // Call search function
-    await result.current[1]('new search');
-
-    // Verify correct sequence of calls
-    expect(mockInvalidateQueries).toHaveBeenCalledWith({
-      queryKey: ['videos'],
+    await act(async () => {
+      await result.current[1]('new search');
     });
 
     expect(mockPrefetchQuery).toHaveBeenCalledWith({
       queryKey: ['videos', 'new search'],
       queryFn: expect.any(Function),
     });
-
-    expect(mockRefetch).toHaveBeenCalled();
-
-    // Verify calls were made in correct order
-    expect(mockInvalidateQueries.mock.invocationCallOrder[0]).toBeLessThan(
-      mockPrefetchQuery.mock.invocationCallOrder[0],
-    );
-
-    expect(mockPrefetchQuery.mock.invocationCallOrder[0]).toBeLessThan(
-      mockRefetch.mock.invocationCallOrder[0],
-    );
   });
 
   it('should return cached data if available', () => {
@@ -251,7 +214,9 @@ describe('useVideos', () => {
 
     const { result } = renderHook(() => useVideos('initial'));
 
-    await result.current[1]('new term');
+    await act(async () => {
+      await result.current[1]('new term');
+    });
 
     await waitFor(() => {
       expect(youtube.get).toHaveBeenCalledWith('/search', {
@@ -290,7 +255,9 @@ describe('useVideos', () => {
 
     const { result } = renderHook(() => useVideos('initial'));
 
-    await result.current[1]('cache test');
+    await act(async () => {
+      await result.current[1]('cache test');
+    });
 
     await waitFor(() => {
       expect(mockSetDataToCache).toHaveBeenCalled();
@@ -390,7 +357,9 @@ describe('useVideos', () => {
 
     const { result } = renderHook(() => useVideos('invalid'));
 
-    await result.current[1]('invalid');
+    await act(async () => {
+      await result.current[1]('invalid');
+    });
 
     await waitFor(() => {
       expect(youtube.get).toHaveBeenCalledWith('/search', {
@@ -480,7 +449,9 @@ describe('useVideos', () => {
 
     const { result } = renderHook(() => useVideos('empty cache'));
 
-    await result.current[1]('empty cache');
+    await act(async () => {
+      await result.current[1]('empty cache');
+    });
 
     await waitFor(() => {
       expect(youtube.get).toHaveBeenCalled();
@@ -537,7 +508,9 @@ describe('useVideos', () => {
 
     const { result } = renderHook(() => useVideos('null test'));
 
-    await result.current[1]('null test');
+    await act(async () => {
+      await result.current[1]('null test');
+    });
 
     await waitFor(() => {
       expect(youtube.get).toHaveBeenCalled();
