@@ -1,0 +1,25 @@
+.searchbar__controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.searchbar__controls input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.searchbar__button.ui.button {
+  margin: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .searchbar__controls {
+    flex-direction: column;
+  }
+
+  .searchbar__button.ui.button {
+    width: 100%;
+  }
+}

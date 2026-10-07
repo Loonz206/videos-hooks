@@ -6,6 +6,9 @@ describe('SearchBar', () => {
     render(<SearchBar onFormSubmit={jest.fn()} />);
     expect(screen.getByLabelText(/video search/i)).toBeInTheDocument();
     expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /^search$/i }),
+    ).toBeInTheDocument();
   });
 
   test('updates input value when typed into', () => {
@@ -20,8 +23,18 @@ describe('SearchBar', () => {
     render(<SearchBar onFormSubmit={mockOnFormSubmit} />);
     const input = screen.getByRole('textbox');
     fireEvent.change(input, { target: { value: 'Redux' } });
-    fireEvent.submit(input.closest('form'));
+    fireEvent.click(screen.getByRole('button', { name: /^search$/i }));
     expect(mockOnFormSubmit).toHaveBeenCalledWith('Redux');
+    expect(mockOnFormSubmit).toHaveBeenCalledTimes(1);
+  });
+
+  test('calls onFormSubmit when the form is submitted directly', () => {
+    const mockOnFormSubmit = jest.fn();
+    render(<SearchBar onFormSubmit={mockOnFormSubmit} />);
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'Hooks' } });
+    fireEvent.submit(input.closest('form'));
+    expect(mockOnFormSubmit).toHaveBeenCalledWith('Hooks');
     expect(mockOnFormSubmit).toHaveBeenCalledTimes(1);
   });
 
