@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import youtube from '../api/youtube';
 import { getSessionCache, setDataToCache } from '../util/sessionCache';
 
@@ -51,7 +51,6 @@ const fetchVideos = async (term: string): Promise<Video[]> => {
 };
 
 const useVideos = (defaultSearchTerm: string): UseVideosReturn => {
-  const queryClient = useQueryClient();
   const [searchTerm, setSearchTerm] = useState(defaultSearchTerm);
 
   const { data: videos = [] } = useQuery({
@@ -67,11 +66,6 @@ const useVideos = (defaultSearchTerm: string): UseVideosReturn => {
     if (!normalizedTerm) {
       return;
     }
-
-    await queryClient.prefetchQuery({
-      queryKey: ['videos', normalizedTerm],
-      queryFn: () => fetchVideos(normalizedTerm),
-    });
 
     setSearchTerm(normalizedTerm);
   };
