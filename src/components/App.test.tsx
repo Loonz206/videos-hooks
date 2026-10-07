@@ -28,6 +28,12 @@ const createVideo = (videoId: string, title: string) => ({
   },
 });
 
+const MOCK_RESULTS = {
+  'bacon cheeseburgers': [createVideo('bacon-1', 'Bacon Cheeseburgers Result')],
+  'react hooks': [createVideo('react-1', 'React Hooks Result')],
+  'mobile ui': [createVideo('mobile-1', 'Mobile UI Result')],
+};
+
 const renderApp = () => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -52,14 +58,7 @@ describe('App search flow', () => {
       async (_path: string, { params }: { params: { q: string } }) => ({
         status: 200,
         data: {
-          items:
-            {
-              'bacon cheeseburgers': [
-                createVideo('bacon-1', 'Bacon Cheeseburgers Result'),
-              ],
-              'react hooks': [createVideo('react-1', 'React Hooks Result')],
-              'mobile ui': [createVideo('mobile-1', 'Mobile UI Result')],
-            }[params.q] ?? [],
+          items: MOCK_RESULTS[params.q as keyof typeof MOCK_RESULTS] ?? [],
         },
       }),
     );
@@ -96,8 +95,8 @@ describe('App search flow', () => {
 
     const input = screen.getByRole('textbox', { name: /video search/i });
     const form = input.closest('form');
-    fireEvent.change(input, { target: { value: 'mobile ui' } });
     expect(form).not.toBeNull();
+    fireEvent.change(input, { target: { value: 'mobile ui' } });
     fireEvent.submit(form as HTMLFormElement);
 
     await waitFor(() => {
