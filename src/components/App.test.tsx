@@ -1,17 +1,19 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import youtube from '../api/youtube';
 import App from './App.tsx';
 
 jest.mock('../api/youtube', () => ({
-  get: jest.fn(),
+  __esModule: true,
+  default: {
+    get: jest.fn(),
+  },
 }));
 
 jest.mock('../util/sessionCache', () => ({
   getSessionCache: jest.fn(() => ({ data: {} })),
   setDataToCache: jest.fn(),
 }));
-
-const youtube = require('../api/youtube');
 
 const createVideo = (videoId: string, title: string) => ({
   id: { kind: 'youtube#video', videoId },
@@ -46,7 +48,7 @@ describe('App search flow', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    youtube.get.mockImplementation(
+    (youtube.get as jest.Mock).mockImplementation(
       async (_path: string, { params }: { params: { q: string } }) => ({
         status: 200,
         data: {

@@ -141,47 +141,18 @@ describe('useVideos', () => {
     expect(result.current[0]).toEqual([]);
   });
 
-  it('should throw error when fetchVideos is called with empty term', async () => {
-    const mockRefetch = jest.fn().mockImplementation(async () => {
-      try {
-        await youtube.get('/search', { params: { q: '' } });
-      } catch (err) {
-        console.log(err);
-        throw new Error('No search term provided');
-      }
-    });
-
-    mockedUseQuery.mockImplementation(() => {
-      return {
-        data: [],
-        isLoading: false,
-        error: null,
-        refetch: mockRefetch,
-      };
-    });
-
-    const mockInvalidateQueries = jest.fn().mockResolvedValue(undefined);
-    const mockPrefetchQuery = jest
-      .fn()
-      .mockImplementation(async ({ queryFn }) => {
-        try {
-          await queryFn();
-        } catch (err) {
-          console.log(err);
-          throw err;
-        }
-      });
+  it('should ignore empty search terms', async () => {
+    const mockPrefetchQuery = jest.fn();
 
     mockedUseQueryClient.mockImplementation(() => ({
-      invalidateQueries: mockInvalidateQueries,
       prefetchQuery: mockPrefetchQuery,
     }));
 
     const { result } = renderHook(() => useVideos('initial'));
 
-    await expect(result.current[1]('')).rejects.toThrow(
-      'No search term provided',
-    );
+    await expect(result.current[1]('')).resolves.toBeUndefined();
+    expect(mockPrefetchQuery).not.toHaveBeenCalled();
+    expect(youtube.get).not.toHaveBeenCalled();
   });
 
   it('should call youtube API when data is not cached', async () => {

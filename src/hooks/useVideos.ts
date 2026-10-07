@@ -65,7 +65,7 @@ const useVideos = (defaultSearchTerm: string): UseVideosReturn => {
     const normalizedTerm = term.trim();
 
     if (!normalizedTerm) {
-      throw new Error('No search term provided');
+      return;
     }
 
     await queryClient.prefetchQuery({
