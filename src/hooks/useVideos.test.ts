@@ -151,22 +151,26 @@ describe('useVideos', () => {
   });
 
   it('calls the API and caches queryFn results when data is not cached', async () => {
-    const apiVideos = [createVideo('fresh-1', 'Fresh Video')];
+    const apiItems = [createVideo('fresh-1', 'Fresh Video')];
+    const expectedVideos = apiItems.map((item) => ({ ...item }));
 
     mockedYoutubeGet.mockResolvedValueOnce({
       status: 200,
-      data: { items: apiVideos },
+      data: { items: apiItems },
     });
 
     renderHook(() => useVideos('fresh term'));
 
     const queryFn = mockedUseQuery.mock.calls[0][0].queryFn;
 
-    await expect(queryFn()).resolves.toEqual(apiVideos);
+    await expect(queryFn()).resolves.toEqual(expectedVideos);
     expect(mockedYoutubeGet).toHaveBeenCalledWith('/search', {
       params: { q: 'fresh term' },
     });
-    expect(mockedSetDataToCache).toHaveBeenCalledWith('fresh term', apiVideos);
+    expect(mockedSetDataToCache).toHaveBeenCalledWith(
+      'fresh term',
+      expectedVideos,
+    );
   });
 
   it('throws for non-200 API responses in queryFn', async () => {
