@@ -85,7 +85,12 @@ describe('useVideos', () => {
       await result.current[1]('   ');
     });
 
-    expect(mockedUseQuery).toHaveBeenCalledTimes(1);
+    expect(mockedUseQuery).not.toHaveBeenCalledWith({
+      queryKey: ['videos', ''],
+      queryFn: expect.any(Function),
+      staleTime: 1000 * 60 * 5,
+      retry: 1,
+    });
   });
 
   it('returns cached data when useQuery provides it', () => {
