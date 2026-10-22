@@ -1,24 +1,34 @@
-import { getSessionCache, setDataToCache } from "./sessionCache";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import store from "store";
+import { cleanUpStorage, getSessionCache, setDataToCache } from "./sessionCache";
+
+let storeData: { [key: string]: unknown } = {};
 
 // Mock store for isolation
-jest.mock("store", () => {
-  let storeData = {};
+vi.mock("store", () => {
   return {
-    get: jest.fn((key) => storeData[key]),
-    set: jest.fn((key, value) => {
-      storeData[key] = value;
-    }),
-    clear: () => {
-      storeData = {};
+    default: {
+      get: vi.fn((key) => storeData[key as string]),
+      set: vi.fn((key, value) => {
+        storeData[key as string] = value;
+      }),
+      clear: () => {
+        storeData = {};
+      },
     },
   };
 });
 
-const store = require("store");
+const mockedStore = store as {
+  get: ReturnType<typeof vi.fn>;
+  set: ReturnType<typeof vi.fn>;
+  clear: () => void;
+};
 
 describe("sessionCache", () => {
   beforeEach(() => {
-    store.clear();
+    mockedStore.clear();
+    vi.clearAllMocks();
     window.localStorage.clear();
   });
 
@@ -42,7 +52,7 @@ describe("sessionCache", () => {
   });
 
   test("handles corrupted store data gracefully", () => {
-    store.get.mockReturnValueOnce("not-json");
+    mockedStore.get.mockReturnValueOnce("not-json");
     expect(() => getSessionCache()).not.toThrow();
     // Should return default structure
     expect(getSessionCache().data).toBeDefined();
@@ -68,8 +78,6 @@ describe("sessionCache", () => {
     const expired = { id: "expired", expiry: now - 1000, value: [0] };
     const valid = { id: "valid", expiry: now + 100000, value: [1] };
     const data = { expired, valid };
-    // Import cleanUpStorage directly for test
-    const { cleanUpStorage } = require("./sessionCache");
     cleanUpStorage(data);
     expect(data.expired).toBeUndefined();
     expect(data.valid).toBeDefined();
@@ -80,7 +88,6 @@ describe("sessionCache", () => {
     const a = { id: "a", expiry: now + 1000, value: [1] };
     const b = { id: "b", expiry: now + 2000, value: [2] };
     const data = { a, b };
-    const { cleanUpStorage } = require("./sessionCache");
     cleanUpStorage(data);
     // Only one should remain
     expect(Object.keys(data).length).toBe(1);

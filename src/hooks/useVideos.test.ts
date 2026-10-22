@@ -1,19 +1,22 @@
 import { renderHook } from "@testing-library/react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 import useVideos from "./useVideos";
 
+let cache: { [key: string]: any } = {};
+
 // Mock the entire @tanstack/react-query module
-jest.mock("@tanstack/react-query", () => ({
-  useQuery: jest.fn(),
-  useQueryClient: jest.fn(() => ({
-    invalidateQueries: jest.fn(),
-    prefetchQuery: jest.fn(),
+vi.mock("@tanstack/react-query", () => ({
+  useQuery: vi.fn(),
+  useQueryClient: vi.fn(() => ({
+    invalidateQueries: vi.fn(),
+    prefetchQuery: vi.fn(),
   })),
 }));
 
 // Mock youtube API
-jest.mock("../api/youtube", () => ({
-  get: jest.fn(() =>
+vi.mock("../api/youtube", () => ({
+  get: vi.fn(() =>
     Promise.resolve({
       status: 200,
       data: {
@@ -37,34 +40,29 @@ jest.mock("../api/youtube", () => ({
 }));
 
 // Mock session cache
-jest.mock("../util/sessionCache", () => {
-  let cache: { [key: string]: any } = {};
+vi.mock("../util/sessionCache", () => {
   return {
-    getSessionCache: jest.fn(() => ({ data: cache })),
-    setDataToCache: jest.fn((key, value) => {
+    getSessionCache: vi.fn(() => ({ data: cache })),
+    setDataToCache: vi.fn((key, value) => {
       cache[key] = { value };
     }),
-    __clearCache: () => {
-      cache = {};
-    },
   };
 });
 
-const sessionCache = require("../util/sessionCache");
-const mockedUseQuery = useQuery as jest.Mock;
-const mockedUseQueryClient = useQueryClient as jest.Mock;
+const mockedUseQuery = useQuery as unknown as Mock;
+const mockedUseQueryClient = useQueryClient as unknown as Mock;
 
 describe("useVideos", () => {
   beforeEach(() => {
-    sessionCache.__clearCache();
-    jest.clearAllMocks();
+    cache = {};
+    vi.clearAllMocks();
 
     // Setup default useQuery mock implementation
     mockedUseQuery.mockImplementation(() => ({
       data: [],
       isLoading: false,
       error: null,
-      refetch: jest.fn(),
+      refetch: vi.fn(),
     }));
   });
 
@@ -93,9 +91,9 @@ describe("useVideos", () => {
     ];
 
     // Mock the query client methods
-    const mockRefetch = jest.fn().mockResolvedValue({ data: mockVideos });
-    const mockInvalidateQueries = jest.fn().mockResolvedValue(undefined);
-    const mockPrefetchQuery = jest.fn().mockResolvedValue(undefined);
+    const mockRefetch = vi.fn().mockResolvedValue({ data: mockVideos });
+    const mockInvalidateQueries = vi.fn().mockResolvedValue(undefined);
+    const mockPrefetchQuery = vi.fn().mockResolvedValue(undefined);
 
     // Setup useQuery mock to return data and refetch function
     mockedUseQuery.mockImplementation(() => ({
@@ -156,7 +154,7 @@ describe("useVideos", () => {
       data: cachedVideos,
       isLoading: false,
       error: null,
-      refetch: jest.fn(),
+      refetch: vi.fn(),
     }));
 
     const { result } = renderHook(() => useVideos("cached"));
@@ -169,7 +167,7 @@ describe("useVideos", () => {
       data: [],
       isLoading: false,
       error: new Error("API Error"),
-      refetch: jest.fn(),
+        refetch: vi.fn(),
     }));
 
     const { result } = renderHook(() => useVideos("error"));
