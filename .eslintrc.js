@@ -2,21 +2,21 @@ module.exports = {
   env: {
     browser: true,
     es2020: true,
-    jest: true
+    jest: true,
   },
   extends: [
     'plugin:react/recommended',
     'standard',
     'plugin:prettier/recommended',
-    '@tanstack/eslint-plugin-query/react'
+    '@tanstack/eslint-plugin-query/react',
   ],
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 11,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   plugins: ['react'],
-  rules: {}
-}
+  rules: {},
+};
