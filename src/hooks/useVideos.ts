@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import youtube from "../api/youtube";
-import { getSessionCache, setDataToCache } from "../util/sessionCache";
-=======
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import youtube from '../api/youtube';
 import { getSessionCache, setDataToCache } from '../util/sessionCache';
->>>>>>> origin/main
 
 interface Video {
   id: {
@@ -34,11 +27,7 @@ type UseVideosReturn = [Video[], (term: string) => Promise<void>];
 
 const fetchVideos = async (term: string): Promise<Video[]> => {
   if (!term) {
-<<<<<<< HEAD
-    throw new Error("No search term provided");
-=======
     throw new Error('No search term provided');
->>>>>>> origin/main
   }
 
   const cache = getSessionCache();
@@ -48,11 +37,7 @@ const fetchVideos = async (term: string): Promise<Video[]> => {
     return cachedItem.value;
   }
 
-<<<<<<< HEAD
-  const response = await youtube.get<YoutubeResponse>("/search", {
-=======
   const response = await youtube.get<YoutubeResponse>('/search', {
->>>>>>> origin/main
     params: { q: term },
   });
 
@@ -69,11 +54,7 @@ const useVideos = (defaultSearchTerm: string): UseVideosReturn => {
   const [searchTerm, setSearchTerm] = useState(defaultSearchTerm);
 
   const { data: videos = [] } = useQuery({
-<<<<<<< HEAD
-    queryKey: ["videos", searchTerm],
-=======
     queryKey: ['videos', searchTerm],
->>>>>>> origin/main
     queryFn: () => fetchVideos(searchTerm),
     staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
     retry: 1,
@@ -81,10 +62,7 @@ const useVideos = (defaultSearchTerm: string): UseVideosReturn => {
 
   const search = async (term: string): Promise<void> => {
     const normalizedTerm = term.trim();
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/main
     if (!normalizedTerm) {
       return;
     }

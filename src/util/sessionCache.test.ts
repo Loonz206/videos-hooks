@@ -1,46 +1,24 @@
-<<<<<<< HEAD
-import { beforeEach, describe, expect, test, vi } from "vitest";
-import store from "store";
-import { cleanUpStorage, getSessionCache, setDataToCache } from "./sessionCache";
-
-let storeData: { [key: string]: unknown } = {};
-
-// Mock store for isolation
-vi.mock("store", () => {
-=======
 import { getSessionCache, setDataToCache } from './sessionCache';
 
 // Mock store for isolation
 jest.mock('store', () => {
   let storeData = {};
->>>>>>> origin/main
   return {
-    default: {
-      get: vi.fn((key) => storeData[key as string]),
-      set: vi.fn((key, value) => {
-        storeData[key as string] = value;
-      }),
-      clear: () => {
-        storeData = {};
-      },
+    get: jest.fn((key) => storeData[key]),
+    set: jest.fn((key, value) => {
+      storeData[key] = value;
+    }),
+    clear: () => {
+      storeData = {};
     },
   };
 });
 
-<<<<<<< HEAD
-const mockedStore = store as {
-  get: ReturnType<typeof vi.fn>;
-  set: ReturnType<typeof vi.fn>;
-  clear: () => void;
-};
-=======
 const store = require('store');
->>>>>>> origin/main
 
 describe('sessionCache', () => {
   beforeEach(() => {
-    mockedStore.clear();
-    vi.clearAllMocks();
+    store.clear();
     window.localStorage.clear();
   });
 
@@ -63,13 +41,8 @@ describe('sessionCache', () => {
     expect(cache.data.foo.value).toEqual([4, 5, 6]);
   });
 
-<<<<<<< HEAD
-  test("handles corrupted store data gracefully", () => {
-    mockedStore.get.mockReturnValueOnce("not-json");
-=======
   test('handles corrupted store data gracefully', () => {
     store.get.mockReturnValueOnce('not-json');
->>>>>>> origin/main
     expect(() => getSessionCache()).not.toThrow();
     // Should return default structure
     expect(getSessionCache().data).toBeDefined();
@@ -95,11 +68,8 @@ describe('sessionCache', () => {
     const expired = { id: 'expired', expiry: now - 1000, value: [0] };
     const valid = { id: 'valid', expiry: now + 100000, value: [1] };
     const data = { expired, valid };
-<<<<<<< HEAD
-=======
     // Import cleanUpStorage directly for test
     const { cleanUpStorage } = require('./sessionCache');
->>>>>>> origin/main
     cleanUpStorage(data);
     expect(data.expired).toBeUndefined();
     expect(data.valid).toBeDefined();
@@ -110,10 +80,7 @@ describe('sessionCache', () => {
     const a = { id: 'a', expiry: now + 1000, value: [1] };
     const b = { id: 'b', expiry: now + 2000, value: [2] };
     const data = { a, b };
-<<<<<<< HEAD
-=======
     const { cleanUpStorage } = require('./sessionCache');
->>>>>>> origin/main
     cleanUpStorage(data);
     // Only one should remain
     expect(Object.keys(data).length).toBe(1);
