@@ -1,9 +1,31 @@
-.video-item {
-  display: flex !important;
-  align-items: center !important;
+.video-item-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
   cursor: pointer;
+  text-align: left;
 }
 
-.video-item.item img {
-  max-width: 180px;
+.video-item-card img {
+  width: min(180px, 40vw);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.video-item-card .content {
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .video-item-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .video-item-card img {
+    width: 100%;
+    max-width: none;
+  }
 }

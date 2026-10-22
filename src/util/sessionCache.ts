@@ -1,6 +1,6 @@
-import store from "store";
+import store from 'store';
 
-const SESSION_CACHE = "SESSION_CACHE";
+const SESSION_CACHE = 'SESSION_CACHE';
 const twoWeeks = 1000 * 60 * 60 * 24 * 14;
 
 const currentTime = () => {
@@ -41,7 +41,7 @@ const setDataToCache = (id, value) => {
   try {
     store.set(SESSION_CACHE, JSON.stringify(sessionCache));
   } catch (e) {
-    console.error("Failed to set session cache:", e);
+    console.error('Failed to set session cache:', e);
     cleanUpStorage(data);
   }
 };
@@ -53,7 +53,7 @@ const cleanUpStorage = (data) => {
 
   // if 14 days have been passed, it removes the cache
   for (const key in data) {
-    console.log("key is", key);
+    console.log('key is', key);
     const expiry = data[key].expiry;
     if (expiry && expiry <= currentTime()) {
       delete data[key];

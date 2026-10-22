@@ -1,0 +1,13 @@
+.app-container.ui.container {
+  padding: 1rem 0 2rem;
+}
+
+.app-layout.ui.grid {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 767px) {
+  .app-container.ui.container {
+    padding-inline: 1rem;
+  }
+}

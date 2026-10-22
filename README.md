@@ -1,9 +1,9 @@
 # Videos-Hooks
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![code style: biome](https://img.shields.io/badge/code_style-biome-60a5fa.svg?style=flat-square)](https://biomejs.dev/)
 [![Github Actions Status](https://github.com/Loonz206/videos-hooks/actions/workflows/ci.yml/badge.svg)](https://github.com/Loonz206/videos-hooks/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/Loonz206/videos-hooks/graph/badge.svg)](https://codecov.io/gh/Loonz206/videos-hooks)
 
 A modern React course project that demonstrates advanced React concepts using custom hooks, context, and functional components. This app allows users to search for YouTube videos and view details, leveraging the YouTube Data API v3.
 
@@ -23,7 +23,7 @@ A modern React course project that demonstrates advanced React concepts using cu
 ### Prerequisites
 
 - Node.js v22 (recommended for compatibility)
-- Yarn or npm
+- pnpm 10.17.1 (recommended via Corepack)
 
 ### Installation
 
@@ -37,9 +37,8 @@ A modern React course project that demonstrates advanced React concepts using cu
 2. **Install dependencies:**
 
    ```sh
-   yarn install
-   # or
-   npm install
+   corepack enable
+   pnpm install
    ```
 
 ### Setup API Keys
@@ -60,20 +59,18 @@ This project uses the YouTube Data API v3. You must provide your own API key:
 
 ```sh
 # Start the development server
-yarn start
-# or
-npm start
+pnpm dev
 ```
 
-The app will be available at [http://localhost:3000](http://localhost:3000).
+The app will be available at [http://localhost:5173](http://localhost:5173).
 
 ### Running Tests
 
 ```sh
-yarn test --coverage
-# or
-npm test -- --coverage
+pnpm test
 ```
+
+Coverage is included by default in the `test` script.
 
 ## License
 

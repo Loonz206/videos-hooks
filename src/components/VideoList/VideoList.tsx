@@ -1,4 +1,4 @@
-import VideoItem from "../VideoItem/VideoItem.tsx";
+import VideoItem from '../VideoItem/VideoItem.tsx';
 
 const VideoList = ({
   videos,
