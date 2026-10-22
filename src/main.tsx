@@ -21,8 +21,8 @@ root.render(
       <Suspense fallback={<div>Loading...</div>}>
         <QueryClientProvider client={queryClient}>
           <App />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
       </Suspense>
     </ErrorBoundary>
   </StrictMode>,

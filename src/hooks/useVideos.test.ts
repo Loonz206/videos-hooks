@@ -1,5 +1,5 @@
-import { renderHook } from "@testing-library/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { act, renderHook } from "@testing-library/react";
+import { useQuery } from "@tanstack/react-query";
 import { beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 import useVideos from "./useVideos";
 
@@ -8,10 +8,6 @@ let cache: { [key: string]: any } = {};
 // Mock the entire @tanstack/react-query module
 vi.mock("@tanstack/react-query", () => ({
   useQuery: vi.fn(),
-  useQueryClient: vi.fn(() => ({
-    invalidateQueries: vi.fn(),
-    prefetchQuery: vi.fn(),
-  })),
 }));
 
 // Mock youtube API
@@ -50,7 +46,6 @@ vi.mock("../util/sessionCache", () => {
 });
 
 const mockedUseQuery = useQuery as unknown as Mock;
-const mockedUseQueryClient = useQueryClient as unknown as Mock;
 
 describe("useVideos", () => {
   beforeEach(() => {
@@ -62,7 +57,6 @@ describe("useVideos", () => {
       data: [],
       isLoading: false,
       error: null,
-      refetch: vi.fn(),
     }));
   });
 
@@ -74,64 +68,14 @@ describe("useVideos", () => {
   });
 
   it("should handle search function call", async () => {
-    // Setup mock data and functions
-    const mockVideos = [
-      {
-        id: { kind: "youtube#video", videoId: "new" },
-        snippet: {
-          title: "New Video",
-          description: "Test Description",
-          thumbnails: {
-            default: { url: "test.jpg", width: 120, height: 90 },
-            medium: { url: "test.jpg", width: 320, height: 180 },
-            high: { url: "test.jpg", width: 480, height: 360 },
-          },
-        },
-      },
-    ];
-
-    // Mock the query client methods
-    const mockRefetch = vi.fn().mockResolvedValue({ data: mockVideos });
-    const mockInvalidateQueries = vi.fn().mockResolvedValue(undefined);
-    const mockPrefetchQuery = vi.fn().mockResolvedValue(undefined);
-
-    // Setup useQuery mock to return data and refetch function
-    mockedUseQuery.mockImplementation(() => ({
-      data: [],
-      refetch: mockRefetch,
-    }));
-
-    // Setup useQueryClient mock
-    mockedUseQueryClient.mockImplementation(() => ({
-      invalidateQueries: mockInvalidateQueries,
-      prefetchQuery: mockPrefetchQuery,
-    }));
-
     const { result } = renderHook(() => useVideos("initial"));
 
-    // Call search function
-    await result.current[1]("new search");
-
-    // Verify correct sequence of calls
-    expect(mockInvalidateQueries).toHaveBeenCalledWith({
-      queryKey: ["videos"],
+    await act(async () => {
+      await result.current[1]("new search");
     });
 
-    expect(mockPrefetchQuery).toHaveBeenCalledWith({
-      queryKey: ["videos", "new search"],
-      queryFn: expect.any(Function),
-    });
-
-    expect(mockRefetch).toHaveBeenCalled();
-
-    // Verify calls were made in correct order
-    expect(mockInvalidateQueries.mock.invocationCallOrder[0]).toBeLessThan(
-      mockPrefetchQuery.mock.invocationCallOrder[0],
-    );
-
-    expect(mockPrefetchQuery.mock.invocationCallOrder[0]).toBeLessThan(
-      mockRefetch.mock.invocationCallOrder[0],
-    );
+    const lastCall = mockedUseQuery.mock.calls.at(-1)?.[0];
+    expect(lastCall.queryKey).toEqual(["videos", "new search"]);
   });
 
   it("should return cached data if available", () => {
@@ -154,7 +98,6 @@ describe("useVideos", () => {
       data: cachedVideos,
       isLoading: false,
       error: null,
-      refetch: vi.fn(),
     }));
 
     const { result } = renderHook(() => useVideos("cached"));
@@ -167,7 +110,6 @@ describe("useVideos", () => {
       data: [],
       isLoading: false,
       error: new Error("API Error"),
-        refetch: vi.fn(),
     }));
 
     const { result } = renderHook(() => useVideos("error"));
