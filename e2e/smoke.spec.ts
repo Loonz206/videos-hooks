@@ -112,5 +112,7 @@ test('api failures trigger the application error boundary fallback', async ({
   await page.getByLabel('Video Search').fill('api-failure');
   await page.locator('button.searchbar__button').click();
 
-  await expect(page.getByText('An error has occurred')).toBeVisible();
+  await expect(
+    page.getByRole('heading', { name: 'We could not load this app.' }),
+  ).toBeVisible();
 });
