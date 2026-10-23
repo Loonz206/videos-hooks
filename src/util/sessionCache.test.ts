@@ -17,9 +17,16 @@ jest.mock('store', () => {
 const store = require('store');
 
 describe('sessionCache', () => {
+  let consoleErrorSpy: jest.SpyInstance;
+
   beforeEach(() => {
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
     store.clear();
     window.localStorage.clear();
+  });
+
+  afterEach(() => {
+    consoleErrorSpy.mockRestore();
   });
 
   test('set and get cache for an id', () => {

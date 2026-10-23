@@ -1,0 +1,8 @@
+{
+  "*.{js,jsx,ts,tsx,json}": [
+    "biome check --write --unsafe --no-errors-on-unmatched"
+  ],
+  "*.{js,jsx,ts,tsx}": [
+    "jest --env=jsdom --watch=false --findRelatedTests --passWithNoTests"
+  ]
+}

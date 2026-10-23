@@ -1,36 +1,52 @@
 import store from 'store';
+import { logger } from './logger';
 
 const SESSION_CACHE = 'SESSION_CACHE';
 const twoWeeks = 1000 * 60 * 60 * 24 * 14;
+
+interface SessionCacheItem {
+  id: string;
+  expiry: number;
+  value: unknown;
+}
+
+interface SessionCache {
+  data: Record<string, SessionCacheItem>;
+  nextCleanup: number;
+}
 
 const currentTime = () => {
   return Date.now();
 };
 
 const getSessionCache = () => {
-  let sessionCache = {
+  let sessionCache: SessionCache = {
     data: {},
     nextCleanup: new Date().getTime() + twoWeeks,
   };
 
   try {
-    const data = store.get(SESSION_CACHE);
+    const data = store.get(SESSION_CACHE) as string | undefined;
 
     if (data) {
       sessionCache = JSON.parse(data);
     }
-  } catch (e) {
-    console.error(e.message);
+  } catch (error) {
+    logger.error({
+      event: 'cache.session.read_failed',
+      message: 'Failed to read session cache',
+      error,
+    });
   }
 
   return sessionCache;
 };
 
-const setDataToCache = (id, value) => {
+const setDataToCache = (id: string, value: unknown) => {
   const sessionCache = getSessionCache();
   const data = sessionCache.data;
 
-  const item = {
+  const item: SessionCacheItem = {
     id,
     expiry: new Date().getTime() + twoWeeks,
     value,
@@ -40,20 +56,27 @@ const setDataToCache = (id, value) => {
 
   try {
     store.set(SESSION_CACHE, JSON.stringify(sessionCache));
-  } catch (e) {
-    console.error('Failed to set session cache:', e);
+  } catch (error) {
+    logger.error({
+      event: 'cache.session.write_failed',
+      message: 'Failed to set session cache',
+      error,
+    });
     cleanUpStorage(data);
   }
 };
 
-const cleanUpStorage = (data) => {
+const cleanUpStorage = (data: Record<string, SessionCacheItem>) => {
   let isDeleted;
-  let oldest;
-  let oldestKey;
+  let oldest: number | undefined;
+  let oldestKey: string | undefined;
 
   // if 14 days have been passed, it removes the cache
   for (const key in data) {
-    console.log('key is', key);
+    logger.debug({
+      event: 'cache.session.cleanup_scan',
+      context: { key },
+    });
     const expiry = data[key].expiry;
     if (expiry && expiry <= currentTime()) {
       delete data[key];
