@@ -75,6 +75,7 @@ describe('useVideos', () => {
       queryFn: expect.any(Function),
       staleTime: 1000 * 60 * 5,
       retry: 1,
+      throwOnError: true,
     });
   });
 
@@ -90,18 +91,21 @@ describe('useVideos', () => {
       queryFn: expect.any(Function),
       staleTime: 1000 * 60 * 5,
       retry: 1,
+      throwOnError: true,
     });
     expect(mockedUseQuery).not.toHaveBeenCalledWith({
       queryKey: ['videos', ''],
       queryFn: expect.any(Function),
       staleTime: 1000 * 60 * 5,
       retry: 1,
+      throwOnError: true,
     });
     expect(mockedUseQuery).toHaveBeenLastCalledWith({
       queryKey: ['videos', 'initial'],
       queryFn: expect.any(Function),
       staleTime: 1000 * 60 * 5,
       retry: 1,
+      throwOnError: true,
     });
   });
 
@@ -206,6 +210,7 @@ describe('useVideos', () => {
       queryFn: expect.any(Function),
       staleTime: 1000 * 60 * 5,
       retry: 1,
+      throwOnError: true,
     });
   });
 });
