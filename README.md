@@ -3,8 +3,8 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![code style: biome](https://img.shields.io/badge/code_style-biome-60a5fa.svg?style=flat-square)](https://biomejs.dev/)
 [![Github Actions Status](https://github.com/Loonz206/videos-hooks/actions/workflows/ci.yml/badge.svg)](https://github.com/Loonz206/videos-hooks/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/Loonz206/videos-hooks/graph/badge.svg)](https://codecov.io/gh/Loonz206/videos-hooks)
-[![Coverage 90%+](https://img.shields.io/codecov/c/github/Loonz206/videos-hooks?label=coverage&token=)](https://codecov.io/gh/Loonz206/videos-hooks)
+[![Codecov](https://codecov.io/gh/Loonz206/videos-hooks/branch/main/graph/badge.svg)](https://codecov.io/gh/Loonz206/videos-hooks/branch/main)
+[![Coverage](https://img.shields.io/codecov/c/github/Loonz206/videos-hooks?label=coverage)](https://codecov.io/gh/Loonz206/videos-hooks/branch/main)
 
 A modern React course project that demonstrates advanced React concepts using custom hooks, context, and functional components. This app allows users to search for YouTube videos and view details, leveraging the YouTube Data API v3.
 
